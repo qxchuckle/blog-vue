@@ -55,7 +55,7 @@ const formRef = ref(null);
 
 const user = reactive({
   username: localStorage.getItem("username") || "",
-  password: localStorage.getItem("password") || "",
+  password: "",
   remember: localStorage.getItem("remember") == 1,
 })
 let spinShow = ref(false);
@@ -92,11 +92,13 @@ const login = async () => {
       // 记住我
       if (user.remember) {
         localStorage.setItem("username", user.username);
-        localStorage.setItem("password", user.password);
+        // localStorage.setItem("password", user.password);
+        localStorage.setItem("token", result.data.token);
         localStorage.setItem("remember", user.remember ? 1 : 0);
       } else {
         localStorage.removeItem("username");
-        localStorage.removeItem("password");
+        // localStorage.removeItem("password");
+        localStorage.removeItem("token");
         localStorage.removeItem("remember");
       }
       router.push({

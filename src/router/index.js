@@ -5,6 +5,7 @@ const Test = () => import('../views/Test.vue')
 const Login = () => import('../views/Login.vue')
 const DashBoard = () => import('../views/dashboard/DashBoard.vue')
 const Category = () => import('../views/dashboard/Category.vue')
+const Article = () => import('../views/dashboard/Article.vue')
 
 // 路由配置
 const routes = [
@@ -18,6 +19,11 @@ const routes = [
     name: 'DashBoard',
     component: DashBoard,
     children: [
+      {
+        path: 'article',
+        name: 'Article',
+        component: Article
+      },
       {
         path: 'category',
         name: 'Category',

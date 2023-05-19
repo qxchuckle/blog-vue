@@ -32,31 +32,43 @@ const route = useRoute()
 function renderIcon(icon) {
   return () => h(NIcon, null, { default: () => h(icon) });
 }
-
+import { RouterLink } from "vue-router";
 const menuOptions = [
   {
-    label: (route) => h(
-      'div', // type
-      { onClick: () => { toPage("Article") } },
-      "文章管理"
+    label: () => h(
+      RouterLink,
+      {
+        to: {
+          name: "Article"
+        }
+      },
+      { default: () => "文章管理" }
     ),
     key: "article",
     icon: renderIcon(BookIcon)
   },
   {
-    label: (route) => h(
-      'div', // type
-      { onClick: () => { toPage("Category") } },
-      "文章分类"
+    label: () => h(
+      RouterLink,
+      {
+        to: {
+          name: "Category"
+        }
+      },
+      { default: () => "分类管理" }
     ),
     key: "category",
     icon: renderIcon(BookIcon),
   },
   {
-    label: (route) => h(
-      'div', // type
-      { onClick: () => { toPage("Login") } },
-      "退出"
+    label: () => h(
+      RouterLink,
+      {
+        to: {
+          name: "Login"
+        }
+      },
+      { default: () => "退出" }
     ),
     key: "logout",
     icon: renderIcon(BookIcon),
@@ -106,6 +118,8 @@ function toPage(route){
 
   .main {
     width: 100%;
+    padding: 10px 15px;
+    overflow-y: auto;
   }
 }
 </style>

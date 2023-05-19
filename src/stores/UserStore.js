@@ -4,8 +4,8 @@ export default defineStore('UserStore', {
   // 状态
   state: () => {
     return {
-      token: '',
-      username: '',
+      token: localStorage.getItem("token") || "",
+      username: localStorage.getItem("username") || "",
     }
   },
   // 对状态的操作

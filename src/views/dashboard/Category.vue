@@ -64,7 +64,9 @@
 import { ref, reactive, inject, onMounted } from "vue"
 import { storeToRefs } from 'pinia'
 import useUserStore from '../../stores/UserStore'
+import usePostStore from '../../stores/PostStore'
 const userStore = useUserStore();
+const postStore = usePostStore();
 import { useRouter, useRoute } from "vue-router"
 const router = useRouter()
 const route = useRoute()
@@ -76,29 +78,26 @@ const loadingBar = inject('loadingBar');
 let spinShow = ref(false);
 let showAdd = ref(false);
 // 分类数据
-let categoryList = ref(null)
+let {categoryList} = storeToRefs(postStore)
 const newCategory = reactive({
   name: ""
 })
 // 加载数据
 async function loadData() {
   spinShow.value = true;
-  let res = await axios({
-    url: '/api/category',
-    method: 'get',
-    timeout: 5000
-  })
+  let result = await postStore.loadCategoryList();
   spinShow.value = false;
-  let result = res.data;
   if (result.code === '0000') {
-    categoryList.value = result.data.categoryArr;
   } else {
     message.error(result.msg);
   }
 }
 
 onMounted(() => {
-  loadData();
+  // 只有列表为空才去初始化获取分类
+  if(!categoryList.value.length){
+    loadData();
+  }
 });
 
 let rules = {
@@ -224,6 +223,6 @@ function updateCategory() {
 
 <style lang="scss" scoped>
 .category-panel {
-  height: 100vh;
+  height: calc(100vh - 20px);
 }
 </style>
