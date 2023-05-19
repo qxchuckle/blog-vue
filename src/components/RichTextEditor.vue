@@ -1,29 +1,44 @@
 <template>
   <div style="z-index:99">
+    <n-spin :show="spinShow">
     <Toolbar :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" style="border-bottom: 1px solid #ccc" />
-    <Editor :defaultConfig="editorConfig" :mode="mode" v-model="valueHtml" style="height: 100%;min-height: 150px;overflow-y: hidden;border-bottom: 1px solid #ccc;"
-      @onCreated="handleCreated" @onChange="handleChange" />
+    <Editor :defaultConfig="editorConfig" :mode="mode" v-model="valueHtml"
+      style="height: 100%;min-height: 150px;overflow-y: hidden;border-bottom: 1px solid #ccc;" @onCreated="handleCreated"
+      @onChange="handleChange" />
+    </n-spin>
   </div>
 </template>
 
 <script setup>
 import '@wangeditor/editor/dist/css/style.css';
-import { onBeforeUnmount, ref, shallowRef, onMounted,reactive,nextTick } from 'vue';
+import { onBeforeUnmount, ref, shallowRef, onMounted, reactive, nextTick } from 'vue';
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import { DomEditor } from '@wangeditor/editor'
+import usePostStore from '../stores/PostStore'
+let spinShow = ref(false);
+
+const postStore = usePostStore();
 // 编辑器实例，必须用 shallowRef，重要！
 const editorRef = shallowRef();
 // 内容 HTML
 const valueHtml = ref('<p></p>');
 // 模拟 ajax 异步获取内容
-onMounted(() => {
-  nextTick(()=>{
-    valueHtml.value = props.modelValue
+onMounted(async() => {
+  spinShow.value = true;
+  nextTick(() => {
+    valueHtml.value = props.modelValue;
   })
+  if(postStore.editPost.post_id.length){
+    let result = await postStore.getOnePost(postStore.editPost.post_id)
+    valueHtml.value = result.data.content
+  }else{
+    valueHtml.value = postStore.editPost.content
+  }
+  spinShow.value = false;
 });
 // 工具栏要排除的功能
 const toolbarConfig = {
-  excludeKeys: ["uploadVideo","uploadImage"],
+  excludeKeys: ["uploadVideo", "uploadImage"],
 };
 const mode = ref('default')
 const editorConfig = { placeholder: '请输入内容...' };
