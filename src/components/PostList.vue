@@ -8,7 +8,7 @@
               <div>发布时间：{{ dayjs(Number(item.create_time)).format("YYYY-MM-DD") }}</div>
               <div>更新时间：{{ dayjs(Number(item.revise_time)).format("YYYY-MM-DD") }}</div>
               <n-button @click="toUpdate(item)">修改</n-button>
-              <n-button>删除</n-button>
+              <n-button @click="toDelete(item)">删除</n-button>
             </n-space>
           </template>
       </n-card>
@@ -52,6 +52,40 @@ function toUpdate(item) {
   postStore.editPost = item;
   postStore.editPost.post_id = item.post_id;
 }
+
+function toDelete(item) {
+  dialog.warning({
+    title: '警告',
+    content: `确认删除文章: ${item.title}`,
+    positiveText: '确认删除',
+    negativeText: '取消',
+    onPositiveClick: () => {
+      axios({
+        url: '/api/post/delete',
+        method: 'post',
+        data: {
+          post_id: item.post_id,
+        },
+        timeout: 5000
+      }).then(res => {
+        let result = res.data;
+        console.log(result);
+        if (result.code === '0000') {
+          message.success(result.msg);
+          postStore.loadPostList();
+        } else {
+          message.error(result.msg);
+        }
+      }).catch(err => {
+        message.error("出错了");
+      })
+    },
+    onNegativeClick: () => { }
+  })
+}
+
+
+
 </script>
 
 <style lang="scss" scoped></style>

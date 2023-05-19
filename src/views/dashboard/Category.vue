@@ -78,7 +78,7 @@ const loadingBar = inject('loadingBar');
 let spinShow = ref(false);
 let showAdd = ref(false);
 // 分类数据
-let {categoryList} = storeToRefs(postStore)
+let { categoryList } = storeToRefs(postStore)
 const newCategory = reactive({
   name: ""
 })
@@ -95,7 +95,7 @@ async function loadData() {
 
 onMounted(() => {
   // 只有列表为空才去初始化获取分类
-  if(!categoryList.value.length){
+  if (!categoryList.value.length) {
     loadData();
   }
 });
@@ -168,8 +168,7 @@ function deleteCategory(item) {
         message.error("出错了");
       })
     },
-    onNegativeClick: () => {
-    }
+    onNegativeClick: () => { }
   })
 }
 // 要提交的更新数据
