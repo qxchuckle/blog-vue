@@ -18,6 +18,8 @@ const routes = [
     path: '/dashboard',
     name: 'DashBoard',
     component: DashBoard,
+    // 默认重定向
+    redirect: "/dashboard/article",
     children: [
       {
         path: 'article',

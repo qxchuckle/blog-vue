@@ -3,7 +3,7 @@
     <n-layout has-sider>
       <n-layout-sider bordered collapse-mode="width" :collapsed-width="60" :width="180" :collapsed="collapsed"
         show-trigger @collapse="collapsed = true" @expand="collapsed = false">
-        <n-menu :collapsed="collapsed" :collapsed-width="60" :collapsed-icon-size="22" :options="menuOptions" />
+        <n-menu :collapsed="collapsed" :collapsed-width="60" :collapsed-icon-size="22" :options="menuOptions" :default-value="route.name"/>
       </n-layout-sider>
       <div class="main">
         <router-view></router-view>
@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue"
+import { ref, reactive,onMounted } from "vue"
 let collapsed = ref(null);
 
 import { defineComponent, h } from "vue";
@@ -44,7 +44,7 @@ const menuOptions = [
       },
       { default: () => "文章管理" }
     ),
-    key: "article",
+    key: "Article",
     icon: renderIcon(BookIcon)
   },
   {
@@ -57,7 +57,7 @@ const menuOptions = [
       },
       { default: () => "分类管理" }
     ),
-    key: "category",
+    key: "Category",
     icon: renderIcon(BookIcon),
   },
   {
@@ -70,28 +70,10 @@ const menuOptions = [
       },
       { default: () => "退出" }
     ),
-    key: "logout",
+    key: "Logout",
     icon: renderIcon(BookIcon),
   }
 ];
-
-function toPage(route){
-  router.push({
-    name: route
-  })
-}
-
-// let menus = [
-//   { name: "文章管理", routeName: "Article"},
-//   { name: "分类管理", routeName: "Category"},
-//   { name: "退出", routeName: "Logout"},
-// ]
-
-// function toPage(item){
-//   if(item.routeName === "Logout"){
-
-//   }
-// }
 
 </script>
 

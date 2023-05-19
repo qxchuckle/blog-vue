@@ -1,6 +1,16 @@
 <template>
-  <div>
-    2342432424
+  <div v-for="item in postList">
+    <n-card :title="item.title" style="margin-bottom: 10px;">
+      {{ item.content.replace(/<[^>]*>/g, '') }}
+      <template #footer>
+        <n-space align="center">
+          <div>发布时间：{{ dayjs(Number(item.create_time)).format("YYYY-MM-DD") }}</div>
+          <div>更新时间：{{ dayjs(Number(item.revise_time)).format("YYYY-MM-DD") }}</div>
+          <n-button @click="toUpdate(item)">修改</n-button>
+          <n-button>删除</n-button>
+        </n-space>
+      </template>
+    </n-card>
   </div>
 </template>
 
@@ -19,8 +29,6 @@ const message = inject('message');
 const notification = inject('notification');
 const dialog = inject('dialog');
 const loadingBar = inject('loadingBar');
-let spinShow = ref(false);
-let showAdd = ref(false);
 import dayjs from 'dayjs';
 
 const {postList} = storeToRefs(postStore);
@@ -29,8 +37,12 @@ onMounted(async () => {
   loadingBar.start();
   await postStore.initPostList();
   loadingBar.finish();
-  // console.log(dayjs(Number(postList.value[1].create_time)).format("YYYY-MM-DD"));
 });
+
+const emit = defineEmits(["update:modelValue"])
+function toUpdate(item){
+  emit("update:modelValue", "update");
+}
 
 </script>
 

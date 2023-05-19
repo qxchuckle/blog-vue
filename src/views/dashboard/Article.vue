@@ -1,8 +1,8 @@
 <template>
   <div>
-    <n-tabs default-value="list" justify-content="start" type="line">
+    <n-tabs v-model:value="tabChoice" justify-content="start" type="line">
       <n-tab-pane name="list" tab="文章列表">
-        <PostList></PostList>
+        <PostList v-model="tabChoice"></PostList>
       </n-tab-pane>
       <n-tab-pane name="add" tab="添加文章">
         <n-form :rules="rules" :model="post" ref="formRef">
@@ -16,13 +16,13 @@
             <n-select v-model:value="post.isShow" :options="showOptions" />
           </n-form-item>
           <RichTextEditor v-model="post.content"></RichTextEditor>
-          <n-form-item>
-            <n-button @click="addPost">提交</n-button>
-          </n-form-item>
         </n-form>
+        <n-form-item>
+          <n-button @click="addPost">提交</n-button>
+        </n-form-item>
       </n-tab-pane>
-      <n-tab-pane name="jay chou" tab="周杰伦">
-        七里香
+      <n-tab-pane name="update" tab="修改文章" v-if="tabChoice === 'update'">
+        <UpPost></UpPost>
       </n-tab-pane>
     </n-tabs>
   </div>
@@ -45,6 +45,7 @@ const dialog = inject('dialog');
 const loadingBar = inject('loadingBar');
 import RichTextEditor from "../../components/RichTextEditor.vue";
 import PostList from "../../components/PostList.vue";
+import UpPost from "../../components/UpPost.vue";
 
 const formRef = ref(null);
 // 保存要新建的文章信息
@@ -129,6 +130,11 @@ function addPost() {
     message.error("请检查输入框");
   })
 }
+// 控制默认tab
+const tabChoice = ref("list")
+
+
+
 
 </script>
 
