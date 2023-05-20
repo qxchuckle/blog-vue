@@ -114,7 +114,7 @@ function addCategory() {
       timeout: 5000
     }).then(res => {
       let result = res.data;
-      console.log(result);
+      // console.log(result);
       if (result.code === '0000') {
         message.success(result.msg);
         showAdd.value = false;
@@ -146,7 +146,7 @@ function deleteCategory(item) {
         timeout: 5000
       }).then(res => {
         let result = res.data;
-        console.log(result);
+        // console.log(result);
         if (result.code === '0000') {
           message.success(result.msg);
           postStore.loadCategoryList();
@@ -191,7 +191,7 @@ function updateCategory() {
       timeout: 5000
     }).then(res => {
       let result = res.data;
-      console.log(result);
+      // console.log(result);
       if (result.code === '0000') {
         message.success(result.msg);
         showUpdate.value = false;
