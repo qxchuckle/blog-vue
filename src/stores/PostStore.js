@@ -39,7 +39,6 @@ export default defineStore('PostStore', {
           timeout: 5000
         })
         let result = res.data;
-        console.log(result)
         msg = result.msg;
         this.categoryList = result.data.categoryArr;
         return result;
@@ -57,7 +56,6 @@ export default defineStore('PostStore', {
     },
     loadPostList: async function () {
       let msg = "";
-      console.log(this.pageInfo.category_id);
       try {
         let res = await axios({
           url: '/api/post',
@@ -71,7 +69,6 @@ export default defineStore('PostStore', {
           timeout: 5000
         })
         let result = res.data;
-        console.log(result)
         msg = result.msg;
         this.postList = result.data.postArr;
         this.postSize = result.data.postSize;
@@ -98,7 +95,6 @@ export default defineStore('PostStore', {
           timeout: 5000
         })
         let result = res.data;
-        console.log(result)
         msg = result.msg;
         return result;
       } catch (e) {

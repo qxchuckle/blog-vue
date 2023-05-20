@@ -53,7 +53,6 @@ const pageNum = computed(() => {
 })
 
 function categoryName(id) {
-  console.log(postStore.categoryList)
   let category = postStore.categoryList.find(item => {
     return item._id === id
   })
@@ -127,7 +126,6 @@ function toDelete(item) {
         timeout: 5000
       }).then(res => {
         let result = res.data;
-        console.log(result);
         if (result.code === '0000') {
           message.success(result.msg);
           postStore.loadPostList();

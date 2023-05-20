@@ -57,7 +57,6 @@ const routes = [
     beforeEnter: async (to, from) => {
       let allow = await autoLogin();
       if (allow) {
-        console.log(to)
         if (from.name !== 'Login') {
           message.success(`欢迎${localStorage.getItem("username")}`)
         }
@@ -104,7 +103,6 @@ async function autoLogin() {
       timeout: 5000
     })
     let result = res.data;
-    console.log(result)
     if (result.code === '0000') {
       return true;
     } else {

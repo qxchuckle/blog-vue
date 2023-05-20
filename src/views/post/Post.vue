@@ -51,7 +51,7 @@ onMounted(async () => {
     let category = postStore.categoryList.find((item) => {
       return item._id === data.category_id;
     })
-    console.log(category);
+    // console.log(category);
     postInfo.category = category ? category.name : "无分类";
 
   } else {

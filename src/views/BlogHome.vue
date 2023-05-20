@@ -121,7 +121,7 @@ async function toCategory(value) {
 
 .nav {
   display: flex;
-  font-size: 20px;
+  font-size: 22px;
   padding-top: 20px;
   color: #363636;
   margin-left: 10px;
@@ -129,6 +129,7 @@ async function toCategory(value) {
   >div {
     cursor: pointer;
     margin-right: 15px;
+    transition: all 0.3s;
 
     .categoryName {
       font-size: 14px;
@@ -136,7 +137,7 @@ async function toCategory(value) {
     }
 
     &:hover {
-      color: #0b84e0;
+      color: #2c97d9;
     }
   }
 }

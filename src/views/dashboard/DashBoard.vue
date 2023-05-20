@@ -21,11 +21,7 @@ import useUserStore from '../../stores/UserStore'
 const userStore = useUserStore();
 import { defineComponent, h } from "vue";
 import { NIcon } from "naive-ui";
-import {
-  BookOutline as BookIcon,
-  PersonOutline as PersonIcon,
-  WineOutline as WineIcon
-} from "@vicons/ionicons5";
+import { BookOutline, HomeOutline, BookmarksOutline, ExitOutline } from "@vicons/ionicons5";
 
 import { useRouter, useRoute } from "vue-router"
 const router = useRouter()
@@ -47,7 +43,7 @@ const menuOptions = [
       { default: () => "文章管理" }
     ),
     key: "Article",
-    icon: renderIcon(BookIcon)
+    icon: renderIcon(BookOutline)
   },
   {
     label: () => h(
@@ -60,7 +56,7 @@ const menuOptions = [
       { default: () => "分类管理" }
     ),
     key: "Category",
-    icon: renderIcon(BookIcon),
+    icon: renderIcon(BookmarksOutline),
   },
   {
     label: () => h(
@@ -73,7 +69,7 @@ const menuOptions = [
       { default: () => "回到首页" }
     ),
     key: "Logout",
-    icon: renderIcon(BookIcon),
+    icon: renderIcon(HomeOutline),
   },
   {
     label: () => h(
@@ -95,7 +91,7 @@ const menuOptions = [
       { default: () => "退出登陆" }
     ),
     key: "Logout",
-    icon: renderIcon(BookIcon),
+    icon: renderIcon(ExitOutline),
   }
 ];
 

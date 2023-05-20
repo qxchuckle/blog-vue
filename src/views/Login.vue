@@ -80,7 +80,7 @@ const login = async () => {
 
     let result = res.data;
     spinShow.value = false;
-    console.log(result);
+    // console.log(result);
 
     // 登陆成功则保存token
     if (result.code === '0000') {
