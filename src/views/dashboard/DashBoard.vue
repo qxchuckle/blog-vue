@@ -2,7 +2,7 @@
   <div class="dash-board-panel">
     <n-layout has-sider>
       <n-layout-sider bordered collapse-mode="width" :collapsed-width="60" :width="180" :collapsed="collapsed"
-        show-trigger @collapse="collapsed = true" @expand="collapsed = false">
+        show-trigger @collapse="collapsed = true" @expand="collapsed = false" style="padding-top:5px">
         <n-menu :collapsed="collapsed" :collapsed-width="60" :collapsed-icon-size="22" :options="menuOptions"
           :default-value="route.name" />
       </n-layout-sider>
