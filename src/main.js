@@ -9,11 +9,7 @@ app.use(createPinia())
 import useUserStore from './stores/UserStore'
 const userStore = useUserStore();
 
-// 导入路由
-import router from './router'
 import axios from 'axios';
-app.use(router)
-
 axios.defaults.baseURL = 'http://127.0.0.1:3000';
 // 拦截器
 axios.interceptors.request.use((config)=>{
@@ -21,6 +17,10 @@ axios.interceptors.request.use((config)=>{
   return config;
 })
 app.provide('axios', axios);
+
+// 导入路由
+import router from './router'
+app.use(router)
 
 // message等
 import { createDiscreteApi } from 'naive-ui'

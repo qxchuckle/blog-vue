@@ -3,14 +3,14 @@
     <div class="nav">
       <div @click="toHome">首页</div>
       <div>
-        <n-popselect v-model:value="selectCategory" :options="categoryOptions" trigger="click">
+        <n-popselect v-model:value="selectCategory" :options="categoryOptions" trigger="hover" @update:value="toCategory">
           <div>分类<span class="categoryName">{{ categoryName }}</span></div>
         </n-popselect>
       </div>
-      <div @click="toLogin">后台</div>
+      <div @click="toDashBoard">后台</div>
     </div>
     <n-divider />
-      <router-view></router-view>
+    <router-view :key="route.fullPath"></router-view>
     <n-divider />
     <div id="footer">
       <div>@轻笑Chuckle</div>
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, inject, onMounted,computed } from "vue"
+import { ref, reactive, inject, onMounted, computed } from "vue"
 import { storeToRefs } from 'pinia'
 import useUserStore from '../stores/UserStore'
 import usePostStore from '../stores/PostStore'
@@ -40,15 +40,15 @@ onMounted(async () => {
   loadCategory();
 })
 
-async function loadPost(){
+async function loadPost() {
   loadingBar.start();
   await postStore.initPostList();
   loadingBar.finish();
 }
 
-function reLoad() {
+async function reLoad() {
   postStore.pageInfo.keyword = "";
-  loadPost()
+  await loadPost()
 }
 
 const { categoryList } = storeToRefs(postStore)
@@ -58,6 +58,9 @@ const selectCategory = ref("");
 async function loadCategory() {
   await postStore.initCategoryList();
   categoryOptions.value = categoryList.value.map((item) => {
+    if (item._id === route.params.id) {
+      selectCategory.value = item._id;
+    }
     return {
       label: item.name,
       value: item._id
@@ -65,24 +68,43 @@ async function loadCategory() {
   });
 }
 // 计算属性，找到当前选择的分类
-const categoryName = computed(()=>{
-  let select = categoryOptions.value.find(item=>{
+const categoryName = computed(() => {
+  let select = categoryOptions.value.find(item => {
     return selectCategory.value === item.value;
   })
   return select ? select.label : "";
 })
 
-function toHome(){
+function toHome() {
+  selectCategory.value = "";
+  postStore.pageInfo.category_id = "";
+  postStore.pageInfo.keyword = "";
   reLoad()
   router.push({
     name: "BlogHome"
   })
 }
-function toLogin(){
+function toDashBoard() {
+  selectCategory.value = "";
+  postStore.pageInfo.category_id = "";
+  postStore.pageInfo.keyword = "";
   router.push({
-    name: "Login"
+    name: "DashBoard"
   })
 }
+
+async function toCategory(value) {
+  postStore.pageInfo.category_id = value
+  await reLoad()
+  router.push({
+    name: "CategoryDetails",
+    params: {
+      id: value
+    }
+  });
+}
+
+
 
 </script>
 
@@ -91,6 +113,10 @@ function toLogin(){
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100%;
 }
 
 .nav {
@@ -98,21 +124,29 @@ function toLogin(){
   font-size: 20px;
   padding-top: 20px;
   color: #363636;
+  margin-left: 10px;
 
   >div {
     cursor: pointer;
     margin-right: 15px;
+
+    .categoryName {
+      font-size: 14px;
+      margin-left: 5px;
+    }
 
     &:hover {
       color: #0b84e0;
     }
   }
 }
+
 #footer {
   text-align: center;
   width: 100%;
   color: rgb(150, 150, 150);
   font-size: 14px;
   line-height: 20px;
+  padding-bottom: 5px;
 }
 </style>

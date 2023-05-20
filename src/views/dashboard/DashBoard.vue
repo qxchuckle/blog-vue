@@ -3,21 +3,22 @@
     <n-layout has-sider>
       <n-layout-sider bordered collapse-mode="width" :collapsed-width="60" :width="180" :collapsed="collapsed"
         show-trigger @collapse="collapsed = true" @expand="collapsed = false">
-        <n-menu :collapsed="collapsed" :collapsed-width="60" :collapsed-icon-size="22" :options="menuOptions" :default-value="route.name"/>
+        <n-menu :collapsed="collapsed" :collapsed-width="60" :collapsed-icon-size="22" :options="menuOptions"
+          :default-value="route.name" />
       </n-layout-sider>
       <div class="main">
         <router-view></router-view>
         <n-back-top :right="60" />
       </div>
-      <n-layout />
     </n-layout>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive,onMounted } from "vue"
+import { ref, reactive, onMounted } from "vue"
 let collapsed = ref(null);
-
+import useUserStore from '../../stores/UserStore'
+const userStore = useUserStore();
 import { defineComponent, h } from "vue";
 import { NIcon } from "naive-ui";
 import {
@@ -80,9 +81,18 @@ const menuOptions = [
       {
         to: {
           name: "Login"
+        },
+        onClick: () => {
+          userStore.token = "";
+          userStore.username = "";
+          // 用户名也保留吧
+          // localStorage.removeItem("username");
+          localStorage.removeItem("token");
+          // 保留之前的记住状态
+          // localStorage.removeItem("remember");
         }
       },
-      { default: () => "退出" }
+      { default: () => "退出登陆" }
     ),
     key: "Logout",
     icon: renderIcon(BookIcon),

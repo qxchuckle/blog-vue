@@ -6,11 +6,11 @@
       </n-tab-pane>
       <n-tab-pane name="add" tab="添加文章">
         <EditPost ref="EditAdd"></EditPost>
-        <n-button @click="addPost">提交</n-button>
+        <n-button @click="addPost" style="margin-top: 10px;">提交</n-button>
       </n-tab-pane>
       <n-tab-pane name="update" tab="修改文章" v-if="tabChoice == 'update'">
         <EditPost ref="EditUpdate"></EditPost>
-        <n-button @click="updatePost">提交</n-button>
+        <n-button @click="updatePost" style="margin-top: 10px;">提交</n-button>
       </n-tab-pane>
     </n-tabs>
   </div>

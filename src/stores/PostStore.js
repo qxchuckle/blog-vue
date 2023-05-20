@@ -22,8 +22,10 @@ export default defineStore('PostStore', {
         page: 1,
         // 查找关键字
         keyword: "",
+        // 分类
+        category_id: "",
         // 每页显示文章数
-        postNum: 5
+        postNum: 8
       },
     }
   },
@@ -55,13 +57,15 @@ export default defineStore('PostStore', {
     },
     loadPostList: async function () {
       let msg = "";
+      console.log(this.pageInfo.category_id);
       try {
         let res = await axios({
           url: '/api/post',
           params: {
             page: this.pageInfo.page,
             postNum: this.pageInfo.postNum,
-            keyword: this.pageInfo.keyword
+            keyword: this.pageInfo.keyword,
+            category_id: this.pageInfo.category_id
           },
           method: 'get',
           timeout: 5000

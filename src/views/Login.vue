@@ -12,7 +12,7 @@
           </n-form-item>
         </n-form>
         <template #footer>
-          <n-checkbox v-model:checked="user.remember" label="记住我" />
+          <n-checkbox v-model:checked="user.remember" label="记住并自动登录" />
           <n-button @click="login">登陆</n-button>
         </template>
       </n-card>
@@ -74,7 +74,7 @@ const login = async () => {
     const res = await axios.post('/api/login', {
       username: user.username,
       password: user.password
-    },{
+    }, {
       timeout: 5000
     });
 

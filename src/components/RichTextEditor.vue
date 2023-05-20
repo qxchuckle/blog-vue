@@ -3,7 +3,7 @@
     <n-spin :show="spinShow">
     <Toolbar :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" style="border-bottom: 1px solid #ccc" />
     <Editor :defaultConfig="editorConfig" :mode="mode" v-model="valueHtml"
-      style="height: 100%;min-height: 150px;overflow-y: hidden;border-bottom: 1px solid #ccc;" @onCreated="handleCreated"
+      style="height: 100%;min-height: 150px;border-bottom: 1px solid #ccc;" @onCreated="handleCreated"
       @onChange="handleChange" />
     </n-spin>
   </div>
