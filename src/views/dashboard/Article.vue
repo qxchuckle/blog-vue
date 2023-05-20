@@ -2,7 +2,7 @@
   <div>
     <n-tabs v-model:value="tabChoice" justify-content="start" type="card">
       <n-tab-pane name="list" tab="文章列表">
-        <PostList v-model="tabChoice"></PostList>
+        <PostList v-model="tabChoice" :showControl="true"></PostList>
       </n-tab-pane>
       <n-tab-pane name="add" tab="添加文章">
         <EditPost ref="EditAdd"></EditPost>

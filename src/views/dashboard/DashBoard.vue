@@ -7,6 +7,7 @@
       </n-layout-sider>
       <div class="main">
         <router-view></router-view>
+        <n-back-top :right="60" />
       </div>
       <n-layout />
     </n-layout>
@@ -58,6 +59,19 @@ const menuOptions = [
       { default: () => "分类管理" }
     ),
     key: "Category",
+    icon: renderIcon(BookIcon),
+  },
+  {
+    label: () => h(
+      RouterLink,
+      {
+        to: {
+          name: "BlogHome"
+        }
+      },
+      { default: () => "回到首页" }
+    ),
+    key: "Logout",
     icon: renderIcon(BookIcon),
   },
   {

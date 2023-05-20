@@ -1,11 +1,14 @@
 // 导入创建路由必要的方法
 import { createRouter, createWebHashHistory } from "vue-router";
 // 路由懒加载
-const Test = () => import('../views/Test.vue')
 const Login = () => import('../views/Login.vue')
 const DashBoard = () => import('../views/dashboard/DashBoard.vue')
 const Category = () => import('../views/dashboard/Category.vue')
 const Article = () => import('../views/dashboard/Article.vue')
+const BlogHome = () => import('../views/BlogHome.vue')
+const PostList = () => import('../components/PostList.vue')
+const Post = () => import('../views/post/Post.vue')
+const NotFount = () => import('../views/NotFount.vue')
 
 // 路由配置
 const routes = [
@@ -13,6 +16,24 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/',
+    name: 'BlogHome',
+    component: BlogHome,
+    redirect: "/home",
+    children: [
+      {
+        path: '/home',
+        name: 'PostList',
+        component: PostList,
+      },
+      {
+        path: '/post/:id',
+        name: 'Post',
+        component: Post,
+      }
+    ]
   },
   {
     path: '/dashboard',
@@ -34,9 +55,9 @@ const routes = [
     ]
   },
   {
-    path: '/test',
-    name: 'Test',
-    component: Test
+    path: '/:catchAll(.*)',
+    name: 'NotFount',
+    component: NotFount
   }
 ];
 

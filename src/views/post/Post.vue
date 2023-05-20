@@ -1,0 +1,62 @@
+<template>
+  <div class="post-container">
+    <n-h1>{{ postInfo.title }}</n-h1>
+    <div>{{ postInfo.category }}</div>
+    <div v-html="postInfo.content"></div>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive, inject, onMounted, nextTick, computed } from "vue"
+import { storeToRefs } from 'pinia'
+import useUserStore from '../../stores/UserStore'
+import usePostStore from '../../stores/PostStore'
+const userStore = useUserStore();
+const postStore = usePostStore();
+import { useRouter, useRoute } from "vue-router"
+const router = useRouter()
+const route = useRoute()
+const axios = inject("axios");
+const message = inject('message');
+const notification = inject('notification');
+const dialog = inject('dialog');
+const loadingBar = inject('loadingBar');
+import dayjs from 'dayjs';
+
+const postInfo = reactive({
+  title: '',
+  content: '',
+  category: '',
+  createTime: '',
+  reviseTime: '',
+})
+
+onMounted(async ()=>{
+  loadingBar.start();
+  let result = await postStore.getOnePost(route.params.id);
+  if(result.code === '0000'){
+    let data = result.data;
+    postInfo.title = data.title;
+    postInfo.content = data.content;
+    postInfo.createTime = dayjs(Number(data.create_time)).format("YYYY-MM-DD");
+    postInfo.reviseTime = dayjs(Number(data.revise_time)).format("YYYY-MM-DD")
+    await postStore.initCategoryList();
+    let category =  postStore.categoryList.find((item)=>{
+      return item._id === data.category_id;
+    })
+    console.log(category);
+    postInfo.category = category ? category.name : "无分类";
+    
+  }else{
+    message.error(result.msg);
+  }
+  loadingBar.finish();
+})
+
+</script>
+
+<style lang="scss" scoped>
+.post-container{
+  width: 100%;
+}
+</style>

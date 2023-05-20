@@ -82,22 +82,11 @@ let { categoryList } = storeToRefs(postStore)
 const newCategory = reactive({
   name: ""
 })
-// 加载数据
-async function loadData() {
-  spinShow.value = true;
-  let result = await postStore.loadCategoryList();
-  spinShow.value = false;
-  if (result.code === '0000') {
-  } else {
-    message.error(result.msg);
-  }
-}
 
-onMounted(() => {
-  // 只有列表为空才去初始化获取分类
-  if (!categoryList.value.length) {
-    loadData();
-  }
+onMounted(async() => {
+  spinShow.value = true;
+  await postStore.initCategoryList();
+  spinShow.value = false;
 });
 
 let rules = {
@@ -129,7 +118,7 @@ function addCategory() {
       if (result.code === '0000') {
         message.success(result.msg);
         showAdd.value = false;
-        loadData();
+        postStore.loadCategoryList();
       } else {
         message.error(result.msg);
       }
@@ -160,7 +149,7 @@ function deleteCategory(item) {
         console.log(result);
         if (result.code === '0000') {
           message.success(result.msg);
-          loadData();
+          postStore.loadCategoryList();
         } else {
           message.error(result.msg);
         }
@@ -206,7 +195,7 @@ function updateCategory() {
       if (result.code === '0000') {
         message.success(result.msg);
         showUpdate.value = false;
-        loadData();
+        postStore.loadCategoryList();
       } else {
         message.error(result.msg);
       }

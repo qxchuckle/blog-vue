@@ -17,6 +17,14 @@ export default defineStore('PostStore', {
         isShow: 1,
       },
       post_id: "",
+      postSize: 0,
+      pageInfo: {
+        page: 1,
+        // 查找关键字
+        keyword: "",
+        // 每页显示文章数
+        postNum: 5
+      },
     }
   },
   actions: {
@@ -37,11 +45,24 @@ export default defineStore('PostStore', {
         message.error(msg);
       }
     },
+    initCategoryList: async function (){
+      if (!this.categoryList.length) {
+        let result = await this.loadCategoryList();
+        if (!(result.code === '0000')) {
+          message.error(result.msg);
+        }
+      }
+    },
     loadPostList: async function () {
       let msg = "";
       try {
         let res = await axios({
           url: '/api/post',
+          params: {
+            page: this.pageInfo.page,
+            postNum: this.pageInfo.postNum,
+            keyword: this.pageInfo.keyword
+          },
           method: 'get',
           timeout: 5000
         })
@@ -49,18 +70,20 @@ export default defineStore('PostStore', {
         console.log(result)
         msg = result.msg;
         this.postList = result.data.postArr;
+        this.postSize = result.data.postSize;
         return result;
       } catch (e) {
         message.error(msg);
       }
     },
-    initPostList: async function () {
-      if (!this.postList.length) {
+    initPostList: async function (page = 1) {
+      // if (!this.postList.length) {
+        this.pageInfo.page = page;
         let result = await this.loadPostList();
         if (!(result.code === '0000')) {
           message.error(result.msg);
         }
-      }
+      // }
     },
     getOnePost: async function (post_id) {
       let msg = "";
