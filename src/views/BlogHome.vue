@@ -14,7 +14,7 @@
     <n-divider />
     <div id="footer">
       <div>@轻笑Chuckle</div>
-      <div>粤ICP备2022076449号</div>
+      <div>一个博客 一叶孤舟 一方世界</div>
     </div>
     <n-back-top :right="60" />
   </div>
@@ -23,17 +23,12 @@
 <script setup>
 import { ref, reactive, inject, onMounted, computed } from "vue"
 import { storeToRefs } from 'pinia'
-import useUserStore from '../stores/UserStore'
 import usePostStore from '../stores/PostStore'
-const userStore = useUserStore();
 const postStore = usePostStore();
 import { useRouter, useRoute } from "vue-router"
 const router = useRouter()
 const route = useRoute()
-const axios = inject("axios");
 const message = inject('message');
-const notification = inject('notification');
-const dialog = inject('dialog');
 const loadingBar = inject('loadingBar');
 
 onMounted(async () => {

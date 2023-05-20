@@ -41,7 +41,6 @@ const router = useRouter()
 const route = useRoute()
 const axios = inject("axios");
 const message = inject('message');
-const notification = inject('notification');
 const dialog = inject('dialog');
 const loadingBar = inject('loadingBar');
 import dayjs from 'dayjs';

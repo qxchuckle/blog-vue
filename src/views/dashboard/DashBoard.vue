@@ -15,11 +15,11 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue"
+import { ref, reactive } from "vue"
 let collapsed = ref(null);
 import useUserStore from '../../stores/UserStore'
 const userStore = useUserStore();
-import { defineComponent, h } from "vue";
+import { h } from "vue";
 import { NIcon } from "naive-ui";
 import { BookOutline, HomeOutline, BookmarksOutline, ExitOutline } from "@vicons/ionicons5";
 

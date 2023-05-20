@@ -23,15 +23,8 @@ import useUserStore from '../../stores/UserStore'
 import usePostStore from '../../stores/PostStore'
 const postStore = usePostStore();
 const userStore = useUserStore();
-import { useRouter, useRoute } from "vue-router"
-const router = useRouter()
-const route = useRoute()
 const axios = inject("axios");
 const message = inject('message');
-const notification = inject('notification');
-const dialog = inject('dialog');
-const loadingBar = inject('loadingBar');
-import RichTextEditor from "../../components/RichTextEditor.vue";
 import PostList from "../../components/PostList.vue";
 import EditPost from "../../components/EditPost.vue";
 // 控制默认tab

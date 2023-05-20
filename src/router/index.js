@@ -21,6 +21,9 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
+    meta: {
+      title: 'Chuckle|登陆'
+    },
     beforeEnter: (to, from) => {
       if (localStorage.getItem("token")) {
         return { name: 'DashBoard' };
@@ -37,16 +40,25 @@ const routes = [
         path: 'home',
         name: 'PostList',
         component: PostList,
+        meta: {
+          title: 'Chuckle|登陆'
+        },
       },
       {
         path: 'post/:id',
         name: 'Post',
         component: Post,
+        meta: {
+          title: 'Chuckle|文章'
+        },
       },
       {
         path: 'category/:id',
         name: 'CategoryDetails',
         component: PostList,
+        meta: {
+          title: 'Chuckle|分类'
+        },
       }
     ]
   },
@@ -54,6 +66,9 @@ const routes = [
     path: '/dashboard',
     name: 'DashBoard',
     component: DashBoard,
+    meta: {
+      title: 'Chuckle|后台'
+    },
     beforeEnter: async (to, from) => {
       let allow = await autoLogin();
       if (allow) {
@@ -71,19 +86,28 @@ const routes = [
       {
         path: 'article',
         name: 'Article',
-        component: Article
+        component: Article,
+        meta: {
+          title: 'Chuckle|管理文章'
+        },
       },
       {
         path: 'category',
         name: 'Category',
         component: Category,
+        meta: {
+          title: 'Chuckle|管理分类'
+        },
       }
     ]
   },
   {
     path: '/:catchAll(.*)',
     name: 'NotFount',
-    component: NotFount
+    component: NotFount,
+    meta: {
+      title: 'Chuckle|404'
+    },
   }
 ];
 
@@ -114,5 +138,12 @@ async function autoLogin() {
     return false;
   }
 }
+
+router.afterEach((to, from) => {
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+})
+
 
 export default router;

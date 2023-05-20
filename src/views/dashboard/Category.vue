@@ -63,18 +63,11 @@
 <script setup>
 import { ref, reactive, inject, onMounted } from "vue"
 import { storeToRefs } from 'pinia'
-import useUserStore from '../../stores/UserStore'
 import usePostStore from '../../stores/PostStore'
-const userStore = useUserStore();
 const postStore = usePostStore();
-import { useRouter, useRoute } from "vue-router"
-const router = useRouter()
-const route = useRoute()
 const axios = inject("axios");
 const message = inject('message');
-const notification = inject('notification');
 const dialog = inject('dialog');
-const loadingBar = inject('loadingBar');
 let spinShow = ref(false);
 let showAdd = ref(false);
 // 分类数据

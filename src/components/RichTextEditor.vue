@@ -13,7 +13,6 @@
 import '@wangeditor/editor/dist/css/style.css';
 import { onBeforeUnmount, ref, shallowRef, onMounted, reactive, nextTick } from 'vue';
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
-import { DomEditor } from '@wangeditor/editor'
 import usePostStore from '../stores/PostStore'
 let spinShow = ref(false);
 
