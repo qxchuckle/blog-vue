@@ -3,7 +3,7 @@
 
 前端：[仓库 blog-vue](https://github.com/qxchuckle/blog-vue)
 
-Vue3 + Vue Router + Pinia + Naive UI + wangEditor
+Vue3 + Vite + Vue Router + Pinia + Naive UI + wangEditor + axios + sass
 
 后端：[仓库 blog-server](https://github.com/qxchuckle/blog-server)
 
