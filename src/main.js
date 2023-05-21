@@ -27,7 +27,7 @@ import { createDiscreteApi } from 'naive-ui'
 const { message, notification, dialog, loadingBar } = createDiscreteApi(
   ['message', 'dialog', 'notification', 'loadingBar']
 )
-// 提供全局的message等
+// 提供全局的message等提示、信息弹窗
 app.provide('message', message);
 app.provide('notification', notification);
 app.provide('dialog', dialog);
