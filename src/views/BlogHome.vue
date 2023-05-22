@@ -1,22 +1,25 @@
 <template>
   <div class="container">
-    <div class="nav">
-      <div @click="toHome">首页</div>
-      <div>
-        <n-popselect v-model:value="selectCategory" :options="categoryOptions" trigger="hover" @update:value="toCategory">
-          <div>分类<span class="categoryName">{{ categoryName }}</span></div>
-        </n-popselect>
+    <n-spin :show="postStore.homeLoadShow">
+      <div class="nav">
+        <div @click="toHome">首页</div>
+        <div>
+          <n-popselect v-model:value="selectCategory" :options="categoryOptions" trigger="hover"
+            @update:value="toCategory">
+            <div>分类<span class="categoryName">{{ categoryName }}</span></div>
+          </n-popselect>
+        </div>
+        <div @click="toDashBoard">后台</div>
       </div>
-      <div @click="toDashBoard">后台</div>
-    </div>
-    <n-divider />
-    <router-view :key="route.fullPath"></router-view>
-    <n-divider />
-    <div id="footer">
-      <div>@轻笑Chuckle</div>
-      <div>一个博客 一叶孤舟 一方世界</div>
-    </div>
-    <n-back-top :right="60" />
+      <n-divider />
+      <router-view :key="route.fullPath"></router-view>
+      <n-divider />
+      <div id="footer">
+        <div>@轻笑Chuckle</div>
+        <div>一个博客 一叶孤舟 一方世界</div>
+      </div>
+      <n-back-top :right="60" />
+    </n-spin>
   </div>
 </template>
 
@@ -70,16 +73,19 @@ const categoryName = computed(() => {
   return select ? select.label : "";
 })
 
-function toHome() {
+async function toHome() {
+  postStore.homeLoadShow = true;
   selectCategory.value = "";
   postStore.pageInfo.category_id = "";
   postStore.pageInfo.keyword = "";
-  reLoad()
+  await reLoad()
   router.push({
     name: "BlogHome"
   })
+  postStore.homeLoadShow = false;
 }
 function toDashBoard() {
+  postStore.homeLoadShow = true;
   selectCategory.value = "";
   postStore.pageInfo.category_id = "";
   postStore.pageInfo.keyword = "";
@@ -89,6 +95,7 @@ function toDashBoard() {
 }
 
 async function toCategory(value) {
+  postStore.homeLoadShow = true;
   postStore.pageInfo.category_id = value
   await reLoad()
   router.push({
@@ -97,6 +104,7 @@ async function toCategory(value) {
       id: value
     }
   });
+  postStore.homeLoadShow = false;
 }
 
 

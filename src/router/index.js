@@ -41,7 +41,7 @@ const routes = [
         name: 'PostList',
         component: PostList,
         meta: {
-          title: 'Chuckle|登陆'
+          title: 'Chuckle|首页'
         },
       },
       {

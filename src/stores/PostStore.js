@@ -27,6 +27,7 @@ export default defineStore('PostStore', {
         // 每页显示文章数
         postNum: 8
       },
+      homeLoadShow: false
     }
   },
   actions: {
@@ -46,12 +47,14 @@ export default defineStore('PostStore', {
         message.error(msg);
       }
     },
-    initCategoryList: async function (){
+    initCategoryList: async function () {
       if (!this.categoryList.length) {
         let result = await this.loadCategoryList();
-        if (!(result.code === '0000')) {
-          message.error(result.msg);
-        }
+        try {
+          if (!(result.code === '0000')) {
+            message.error(result.msg);
+          }
+        } catch (e) { }
       }
     },
     loadPostList: async function () {
@@ -79,11 +82,13 @@ export default defineStore('PostStore', {
     },
     initPostList: async function (page = 1) {
       // if (!this.postList.length) {
-        this.pageInfo.page = page;
-        let result = await this.loadPostList();
+      this.pageInfo.page = page;
+      let result = await this.loadPostList();
+      try {
         if (!(result.code === '0000')) {
           message.error(result.msg);
         }
+      } catch (e) { }
       // }
     },
     getOnePost: async function (post_id) {

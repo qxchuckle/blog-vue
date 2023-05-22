@@ -15,10 +15,12 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue"
+import { ref, reactive,onMounted } from "vue"
 let collapsed = ref(null);
 import useUserStore from '../../stores/UserStore'
 const userStore = useUserStore();
+import usePostStore from '../../stores/PostStore'
+const postStore = usePostStore();
 import { h } from "vue";
 import { NIcon } from "naive-ui";
 import { BookOutline, HomeOutline, BookmarksOutline, ExitOutline } from "@vicons/ionicons5";
@@ -26,6 +28,10 @@ import { BookOutline, HomeOutline, BookmarksOutline, ExitOutline } from "@vicons
 import { useRouter, useRoute } from "vue-router"
 const router = useRouter()
 const route = useRoute()
+
+onMounted(()=>{
+  postStore.homeLoadShow = false;
+})
 
 function renderIcon(icon) {
   return () => h(NIcon, null, { default: () => h(icon) });
