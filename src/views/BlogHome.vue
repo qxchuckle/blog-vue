@@ -98,7 +98,6 @@ function toDashBoard() {
   }
   time = setTimeout(() => {
     postStore.homeLoadShow = false;
-    message.error("超时请重试")
   }, 5000);
 }
 
