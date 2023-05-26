@@ -92,6 +92,14 @@ function toDashBoard() {
   router.push({
     name: "DashBoard"
   })
+  let time;
+  if (time) {
+    clearTimeout(time);
+  }
+  time = setTimeout(() => {
+    postStore.homeLoadShow = false;
+    message.error("超时请重试")
+  }, 5000);
 }
 
 async function toCategory(value) {

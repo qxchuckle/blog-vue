@@ -120,21 +120,16 @@ const router = createRouter({
 })
 
 async function autoLogin() {
-  try {
-    let res = await axios({
-      url: '/api/autoLogin',
-      method: 'post',
-      timeout: 5000
-    })
-    let result = res.data;
-    if (result.code === '0000') {
-      return true;
-    } else {
-      message.error("请先登陆")
-      return false;
-    }
-  } catch (e) {
-    console.log(e)
+  let res = await axios({
+    url: '/api/autoLogin',
+    method: 'post',
+    timeout: 5000
+  })
+  let result = res.data;
+  if (result.code === '0000') {
+    return true;
+  } else {
+    message.error("请先登陆")
     return false;
   }
 }
