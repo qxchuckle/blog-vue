@@ -130,6 +130,9 @@ async function autoLogin() {
     return true;
   } else {
     message.error("请先登陆")
+    if (localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+    }
     return false;
   }
 }
